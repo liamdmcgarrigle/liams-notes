@@ -1,0 +1,13 @@
+{
+    "position": 2,
+    "label": "Functions",
+    "collapsible": true,
+    "collapsed": false,
+    "link": {
+        "type": "doc",
+        "id": "zoho/functions/functions-overview"
+    },
+    "customProps": {
+        "description": "This description can be used in the swizzled DocCard"
+    }
+}

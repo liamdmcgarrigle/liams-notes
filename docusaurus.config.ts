@@ -15,8 +15,8 @@ const config: Config = {
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
-  // organizationName: 'facebook', // Usually your GitHub org/user name.
-  // projectName: 'docusaurus', // Usually your repo name.
+  organizationName: 'liamdmcgarrigle', // Usually your GitHub org/user name.
+  projectName: 'liams-notes', // Usually your repo name.
 
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
@@ -38,14 +38,14 @@ const config: Config = {
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:
-            'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
+            'https://github.com/liamdmcgarrigle/liams-notes/tree/main/packages/create-docusaurus/templates/shared/',
         },
         blog: {
           showReadingTime: true,
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:
-            'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
+            'https://github.com/liamdmcgarrigle/liams-notes/tree/main/packages/create-docusaurus/templates/shared/',
         },
         theme: {
           customCss: './src/css/custom.css',
@@ -66,14 +66,20 @@ const config: Config = {
       items: [
         {
           type: 'docSidebar',
-          sidebarId: 'tutorialSidebar',
+          sidebarId: 'docusaurus',
           position: 'left',
-          label: 'Tutorial',
+          label: 'Docusaurus Docs',
+        },
+        {
+          type: 'docSidebar',
+          sidebarId: 'zoho',
+          position: 'left',
+          label: 'Zoho',
         },
         { to: '/blog', label: 'Blog', position: 'left' },
         {
-          href: 'https://github.com/facebook/docusaurus',
-          label: 'GitHub',
+          href: 'https://github.com/liamdmcgarrigle/liams-notes/issues',
+          label: 'Report Issue/Bug',
           position: 'right',
         },
       ],
@@ -85,25 +91,17 @@ const config: Config = {
           title: 'Docs',
           items: [
             {
-              label: 'Tutorial',
-              to: '/docs/intro',
+              label: 'Zoho',
+              to: '/zoho',
             },
           ],
         },
         {
-          title: 'Community',
+          title: 'Get In Touch',
           items: [
             {
-              label: 'Stack Overflow',
-              href: 'https://stackoverflow.com/questions/tagged/docusaurus',
-            },
-            {
-              label: 'Discord',
-              href: 'https://discordapp.com/invite/docusaurus',
-            },
-            {
-              label: 'Twitter',
-              href: 'https://twitter.com/docusaurus',
+              label: 'Email Me',
+              href: 'mailto:liam@mcgarrigle.co?body=Hi%20there!%0AI%20am%20reaching%20out%20from%20a%20link%20in%20the%20footer%20of%20you%20website%20notes.mcgarrigle.co%0A%0AMy%20message%20is%3A',
             },
           ],
         },
@@ -116,7 +114,7 @@ const config: Config = {
             },
             {
               label: 'GitHub',
-              href: 'https://github.com/facebook/docusaurus',
+              href: 'https://github.com/liamdmcgarrigle/liams-notes',
             },
           ],
         },
