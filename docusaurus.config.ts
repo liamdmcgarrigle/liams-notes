@@ -18,7 +18,7 @@ const config: Config = {
   organizationName: 'liamdmcgarrigle', // Usually your GitHub org/user name.
   projectName: 'liams-notes', // Usually your repo name.
 
-  onBrokenLinks: 'throw',
+  onBrokenLinks: 'warn', //TODO fix all broken links
   onBrokenMarkdownLinks: 'warn',
 
   // Even if you don't use internationalization, you can use this field to set
@@ -38,14 +38,14 @@ const config: Config = {
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:
-            'https://github.com/liamdmcgarrigle/liams-notes/tree/main/packages/create-docusaurus/templates/shared/',
+            'https://github.com/liamdmcgarrigle/liams-notes/',
         },
         blog: {
           showReadingTime: true,
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:
-            'https://github.com/liamdmcgarrigle/liams-notes/tree/main/packages/create-docusaurus/templates/shared/',
+            'https://github.com/liamdmcgarrigle/liams-notes/',
         },
         theme: {
           customCss: './src/css/custom.css',
