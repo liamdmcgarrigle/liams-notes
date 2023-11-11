@@ -4,8 +4,8 @@ import type * as Preset from '@docusaurus/preset-classic';
 
 const config: Config = {
   title: 'My Notes',
-  tagline: 'Just Liam\'s notes',
-  favicon: 'img/favicon.ico',
+  tagline: 'My notes of the things I am learning',
+  favicon: 'img/favicon.png',
 
   // Set the production url of your site here
   url: 'https://notes.mcgarrigle.co',
@@ -18,7 +18,7 @@ const config: Config = {
   organizationName: 'liamdmcgarrigle', // Usually your GitHub org/user name.
   projectName: 'liams-notes', // Usually your repo name.
 
-  onBrokenLinks: 'warn', //TODO fix all broken links
+  onBrokenLinks: 'throw', //TODO fix all broken links
   onBrokenMarkdownLinks: 'warn',
 
   // Even if you don't use internationalization, you can use this field to set
@@ -38,14 +38,14 @@ const config: Config = {
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:
-            'https://github.com/liamdmcgarrigle/liams-notes/',
+            'https://github.com/liamdmcgarrigle/liams-notes/edit/main/',
         },
         blog: {
           showReadingTime: true,
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:
-            'https://github.com/liamdmcgarrigle/liams-notes/',
+            'https://github.com/liamdmcgarrigle/liams-notes/edit/main/',
         },
         theme: {
           customCss: './src/css/custom.css',
@@ -58,10 +58,10 @@ const config: Config = {
     // Replace with your project's social card
     image: 'img/docusaurus-social-card.jpg',
     navbar: {
-      title: 'My Site',
+      title: 'Liam\'s Notes',
       logo: {
-        alt: 'My Site Logo',
-        src: 'img/logo.svg',
+        alt: 'Liam\'s Notes Logo',
+        src: 'img/logo.png',
       },
       items: [
         {
@@ -92,7 +92,7 @@ const config: Config = {
           items: [
             {
               label: 'Zoho',
-              to: '/zoho',
+              to: '/docs/zoho',
             },
           ],
         },
