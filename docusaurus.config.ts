@@ -92,7 +92,7 @@ const config: Config = {
           items: [
             {
               label: 'Zoho',
-              to: '/docs/zoho',
+              to: '/docs/zoho/zoho-introduction',
             },
           ],
         },
