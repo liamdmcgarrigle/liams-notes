@@ -1,38 +1,18 @@
+---
+sidebar_position: 1
+title: Introduction
+description: An introduction to what Docusarous is and why I made my own docs.
+---
 
+import BrowserWindow from '@site/src/components/BrowserWindow';
 
-# How To Use Docs
+Docusaurus is an [open-source](https://github.com/facebook/docusaurus) static site generator for making documentation and blog websites made by Facebook. 
 
-Quick ref for specifics I might forget hi
+The big question is...why am I making my own documentation for a documentation framework that has [amazing documentation](https://docusaurus.io/docs) itself?
 
-## Starting New Docs Site
+There are two reasons:
+1. This is my preferred way of taking notes
+2. I learn things much better when I am in the mindset of teaching/documenting it for others
 
-### What you'll need
-
-- [Node.js](https://nodejs.org/en/download/) version 18.0 or above:
-
-## Generate a new site
-
-Generate a new Docusaurus site using the **classic template**.
-
-CD into the desired directory and run this command.
-Replace "my-website" with your project name
-
-```bash
-npm init docusaurus@latest my-website classic
-```
-
-The command also installs all necessary dependencies you need to run Docusaurus.
-
-## Run your site
-
-Ensure you're terminal is in the correct directory. Start the development server by running:
-
-```bash
-npm run start
-```
-
-The `npm run start` command builds your website locally and serves it through a development server, ready for you to view at http://localhost:3000/.
-
-## Deploy your site
-
+I touched on this in my [welcome blog post](/blog), which explains what this site is and what it's for. Check that out!
 

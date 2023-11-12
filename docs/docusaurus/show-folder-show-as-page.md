@@ -1,5 +1,5 @@
 ---
-sidebar_position: 2
+sidebar_position: 3
 title: Show Folder as Page When Clicked
 description: How to make a page show when a folder is clicked on the sidebar
 ---
