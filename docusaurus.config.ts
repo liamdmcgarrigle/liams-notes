@@ -29,6 +29,11 @@ const config: Config = {
     locales: ['en'],
   },
 
+  markdown: {
+    mermaid: true,
+  },
+  themes: ['@docusaurus/theme-mermaid'],
+
   presets: [
     [
       'classic',
@@ -54,6 +59,8 @@ const config: Config = {
     ],
   ],
 
+
+
   themeConfig: {
     // Replace with your project's social card
     image: 'img/docusaurus-social-card.jpg',
@@ -68,7 +75,13 @@ const config: Config = {
           type: 'docSidebar',
           sidebarId: 'docusaurus',
           position: 'left',
-          label: 'Docusaurus Docs',
+          label: 'Docusaurus',
+        },
+        {
+          type: 'docSidebar',
+          sidebarId: 'dev',
+          position: 'left',
+          label: 'Development',
         },
         {
           type: 'docSidebar',

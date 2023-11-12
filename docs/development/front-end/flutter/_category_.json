@@ -1,0 +1,10 @@
+{
+    "position": 1,
+    "label": "Flutter",
+    "collapsible": true,
+    "collapsed": false,
+    "link": {
+        "type": "doc",
+        "id": "development/front-end/flutter/flutter-intro"
+    }
+}

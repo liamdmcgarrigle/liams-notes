@@ -1,9 +1,7 @@
 ---
-# id: my-doc-id
-sidebar_position: 3
+sidebar_position: 2
 title: Show Folder as Page When Clicked
 description: How to make a page show when a folder is clicked on the sidebar
-# slug: /my-custom-url
 ---
 ## Why
 The default behavior of a folder in the sidebar is to just act as a container for the documents. Meaning if you click on the folder the current page is not navigated.
@@ -13,7 +11,7 @@ While it is not always thought about, and not always desired, sometimes the desi
 This effect is easily achieved using the `_category_.json` file within the folder. 
 ## How
 
-In the `_category_.json` file, add the highlighted lines to the JSON.
+In the `_category_.json` file, add the highlighted lines to the JSON.  
 
 ```json
 {
