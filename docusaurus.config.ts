@@ -137,7 +137,27 @@ const config: Config = {
     prism: {
       theme: prismThemes.github,
       darkTheme: prismThemes.dracula,
-      additionalLanguages: ['dart'],
+      additionalLanguages: [
+        'dart',
+        'diff',
+        'bash'
+      ],
+      magicComments: [
+        // Remember to extend the default highlight class name as well!
+        {
+          className: 'theme-code-block-highlighted-line',
+          line: 'highlight-next-line',
+          block: { start: 'highlight-start', end: 'highlight-end' },
+        },
+        {
+          className: 'code-block-added-line',
+          line: 'Next Line Added',
+        },
+        {
+          className: 'code-block-sub-line',
+          line: 'Next Line Subbed',
+        },
+      ],
     },
   } satisfies Preset.ThemeConfig,
 };

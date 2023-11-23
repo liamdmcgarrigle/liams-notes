@@ -1,0 +1,306 @@
+---
+sidebar_position: 2
+title: Data Types
+description: An Introduction to the different data types in Deluge
+---
+
+:::tip[Try it out yourself!]
+
+Don't take my word for it, try it out yourself. Zoho has an online editor publicly available [here](https://dre.zoho.com/tryout).
+
+Any example code on this page will work in the editor! 
+
+:::
+
+## Data Types In Deluge
+Data types, commonly referred to as types, are the different types of data that have value. For example, text would be a different type than a number.
+
+The official docs page with the listed data types can be found [here](https://www.zoho.com/deluge/help/datatypes.html).
+
+Deluge data types are pretty quirky. If you have experience with coding there may be a few things that are slightly different.
+
+:::info[Deluge is a dynamically typed language]
+
+Dynamically typed means the data type of a variable can be changed. This deluge code will run without errors.
+
+```js title=".deluge"
+variable = 1;
+info variable; //prints 1 to the console
+
+variable = "one";
+info variable; //prints "one" to the console
+
+variable = {"key1": "val1", "key2": "val2"};
+info variable; //prints {"key1": "val1", "key2": "val2"} to the console
+```
+While that gives the language more freedom, that isn't always a good thing. 
+
+Especially since Deluge tries to automatically convert the data type when needed, it can hide erros.
+
+<details>
+  <summary>Example of dynamic typed error</summary>
+
+    Imagine you need to add some numbers together in a function. You may want to process each number first, for example, to make sure they are within a certain range.
+    ```js title="addStuffTogether.deluge"
+    firstNumber = 1;
+    secondNumber = 2;
+
+    //Example of processing one of the numbers:
+    firstNumber = firstNumber.trim(); // .trim() removes white space from text
+
+    info firstNumber + secondNumber; //prints "12"
+    ```
+    The desired outcome would be 3, but the function returns 12. This can make for some big and very costly mistakes while writing business logic. Just imagine, we use Deluge to write billing and book keeping automations in Zoho Books!
+
+    The reason why it returns 12 is because the `.trim()` function only works on a Text, so it converted the Number to Text. There are no red flags and this throws no errors. 
+
+    Then when you try to add the numbers, it can't add a Text and Number, so it converts the second number to text and performs string (or in this case text) [concatenation](https://en.wikipedia.org/wiki/Concatenation), which is common in programming languages to join strings. So it joins text like `"1" + "2" = "12"` instead of adding numbers like `1 + 2 = 3`.
+
+    It might seem silly to use a text function on a number, but in real-life complex logic, it becomes a lot easier to make mistakes like this.
+
+</details>
+
+:::
+
+
+
+## Null
+Null is the same as other languages, it represents the absence of data.
+
+You can define null manually.
+```js title=".deluge"
+variable = null;
+
+info variable; //prints null value to the console
+```
+
+A null value is usually not defined. Null usually comes from an error which will usually cause your function to fail.
+
+
+## Text (String)
+Commonly called "string" in almost every other language, text is the data type that holds text. It can hold a sequence of any character, even emojis. 
+
+:::warning
+
+Zoho is not consistent with this name. They will call this data type both string and text. For example, the function to convert another data type to a text is `.toString()`.
+
+:::
+
+
+```js title=".deluge"
+text = "This is text.";
+
+info text; //prints "This is text." 
+```
+
+## Number (int)
+Commonly called "int" or "integer" in almost every other language, number is the data type that holds whole numbers.
+
+```js title=".deluge"
+number = 1;
+
+info number + 1; //prints 2
+```
+
+
+## Decimal (Float, Double)
+Commonly called "float", "double", and many other names in other languages, decimal is the data type that holds numbers that have decimals.
+
+```js title=".deluge"
+decimal = 1.5;
+
+info decimal + 0.1; //prints 1.6
+```
+
+## Boolean
+Boolean is a true or false value. It is used for check/toggle states, conditional statements, and much more.
+
+```js title=".deluge"
+boolean = true;
+
+info boolean; //prints true
+
+if (boolean) {
+    info "This runs if boolean is true!";
+} else {
+    info "This runs if boolean is false!";
+}
+```
+
+## Date-Time
+Date-Time is a data type to hold the date and time. The date can be in many [different formats](https://www.zoho.com/deluge/help/datatypes/date-time.html).
+
+As far as I know, there isn't a way to define a variable directly as a Date-Time type. You first need to create a string and then convert it to a date using a function.
+
+```js title=".deluge"
+dateTime = "15-Aug-2016 19:00:00"; //this is just a string at this point
+dateTime = dateTime.toDateTime(); //this is now a Date-Time. .toDateTime()() converts a string to date-time
+```
+
+
+You can format a date by converting it to a text and passing the date format as a parameter to the to text method, like `.toString("MM-dd-yy")`. You can go [here](https://www.zoho.com/deluge/help/datatypes/date-time.html) to see all of the supported date formats.
+```js title=".deluge"
+dateTime = "15-Aug-2016 19:00:00"; 
+dateTime = dateTime.toDateTime(); 
+info dateTime.toString("MM-dd-yy"); //prints 08-15-16
+info dateTime.toString("M/d/yy"); //prints 8/15/16
+info dateTime.toString("MMMM dd yyyy"); //prints August 15 2016
+info dateTime.toString("h:mm a"); //prints 7:00 PM
+```
+
+
+:::warning[Avoid using the number for the month when possible]
+
+The position for the month and day in a date differs from region to region. I believe Deluge takes your region into account, but it is better to control variables (pun intended 😊). 
+```js title=".deluge"
+date = "5-6-2016"; 
+info date.toDateTime().getMonth(); //prints 5, meaning at least in my region (eastern us) it considers the first number to be the month
+
+date = "6-May-2016";
+info date.toDateTime().getMonth(); //still prints 5, much clearer to read no matter the region
+```
+
+:::
+
+
+The date-Time can be held without the time, but there will always be a placeholder time of `00:00:00`. Here is an example:
+
+```js title=".deluge"
+date = "15-Aug-2016";
+info date.toDateTime().getTime(); //prints 12:00 AM (00:00:00)
+```
+
+
+## List (Array)
+Lists, or commonly called arrays in other languages, are lists of any data type separated by commas. Zoho depreciated lists in Deluge a couple of years ago. In their docs, they claim they will continue to work, they will just not be improved. They no longer call it depreciated but label it as obsolete.
+
+Zoho tells us to use the collections date type instead. I (and it seems most other Zoho Devs) still use the list data-type.
+
+You can define a list by name or by manually writing a list.
+
+```js title=".deluge"
+iAmList = List();
+iAmList.add("1");
+iAmList.add("2");
+iAmList.add("3");
+info iAmList;
+
+iAmListToo = [1,2,3];
+info iAmListToo;
+
+```
+
+Lists can be a list of any date type. You can even have lists of other lists.
+```js title=".deluge"
+iAmList = List();
+iAmList.add([1,2,3]);
+iAmList.add([4,5,6]);
+iAmList.add([7,8,9]);
+info iAmList; //prints [1,2,3],[4,5,6],[7,8,9]
+
+iAmListToo = List();
+iAmListToo.add([1,2,3]);
+iAmListToo.add("I am text");
+iAmListToo.add(55);
+info iAmListToo; //prints [1,2,3],I am text,55
+```
+
+# Key-Value or Map
+The key-value data type (called Map in most other languages and within the Deluge code) is like a [list](#list-array) but each item is a key value pair like `'color':'red'`. Also like lists, Zoho depreciated Maps in Deluge a couple of years ago. In their docs, they claim they will continue to work, they will just not be improved. They no longer call it depreciated but label it as obsolete. All devs I know about continue to use Maps instead of collections.
+
+Creating Maps is also very similar to lists.
+
+```js title=".deluge"
+iAmMap = Map();
+iAmMap.put("key 1", "value 1");
+iAmMap.put("key 2", "value 2");
+iAmMap.put("key 3", "value 3");
+info iAmMap; //prints {"key 1":"value 1","key 2":"value 2","key 3":"value 3"}
+
+iAmMapToo = {"key 1":"value 1","key 2":"value 2","key 3":"value 3"};
+info iAmMapToo; //prints {"key 1":"value 1","key 2":"value 2","key 3":"value 3"}
+```
+
+You can also have the value of a map be another map!
+
+```js title=".deluge"
+personOneMap = Map();
+personOneMap.put("name", "Molly");
+personOneMap.put("hair", "black");
+personOneMap.put("age", 35);
+
+personTwoMap = Map();
+personTwoMap.put("name", "Jeff");
+personTwoMap.put("hair", "white");
+personTwoMap.put("age", 29);
+
+employeesMap = Map();
+employeesMap.put(employee1, personOneMap);
+employeesMap.put(employee2, personTwoMap);
+
+info employeesMap; //I formatted print statement in the next code block for readability 
+```
+`employeesMap` returns this data object:
+```JS
+{
+   "employee1":{
+      "name":"Molly",
+      "hair":"black",
+      "age":35
+   },
+   "employee2":{
+      "name":"Jeff",
+      "hair":"white",
+      "age":29
+   }
+}
+
+//it will actually print like shown below this line. I formatted it to be easier to read
+//the data is exactly the same
+{1:{"name":"Molly","hair":"black","age":35},2:{"name":"Jeff","hair":"white","age":29}}
+```
+This is really powerful stuff!
+
+## Collection
+Collections are supposed to replace lists and maps. It is a data type that can have either lists or Maps, but not at the same time or it will throw an error. 
+
+:::danger[Don't use this data type]
+
+While it would normally be terrible advice to use depreciated data types over the replacement, I think this is an exception.
+
+In my opinion, this data type is confusing at best. I would suggest using the Map or List data type unless they get removed by Zoho, which is very unlikely since there are 10 years worth of code written with maps and lists.
+
+If you look on the Zoho forums, Zoho employees themselves write Deluge code that uses Lists and Maps instead of collections. 
+
+
+:::
+
+
+```js title=".deluge"
+collectionAsMap = Collection();
+collectionAsMap.insert("key1":"value1");
+collectionAsMap.insert("key2":"value2");
+info collectionAsMap; //prints {"key1":"value1","key2":"value2"}
+
+collectionAsList = Collection();
+collectionAsList.add("thing1");
+collectionAsList.insert("thing2");
+info collectionAsList; //prints thing1,thing2
+```
+
+
+
+## File
+
+Files are considered another data type in Deluge. Only online files are supported, meaning a file needs to be fetched from an online source or integration.
+
+```js title=".deluge"
+imAmFile  =  invokeUrl
+[
+url: "https://sample-videos.com/img/Sample-png-image-100kb.png"
+type: GET
+];
+
+//imAmFile holds the image from that link.
+info imAmFile.getFileSize() //prints the file size in bytes
+```

@@ -1,0 +1,301 @@
+---
+sidebar_position: 3
+title: Code Block Features
+---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+
+## Example of Styled Code Block
+
+```js showLineNumbers title="thing.js"
+{
+  className: 'theme-code-block-highlighted-line',
+  line: 'highlight-next-line',
+  block: { start: 'highlight-start', end: 'highlight-end' },
+},
+//highlight-start
+{
+  className: 'code-block-added-line',
+  line: 'Next Line Added',
+},
+//highlight-end
+{
+  className: 'code-block-sub-line',
+  line: 'Next Line Subbed',
+},
+```
+````md
+```js showLineNumbers title="thing.js"
+{
+  className: 'theme-code-block-highlighted-line',
+  line: 'highlight-next-line',
+  block: { start: 'highlight-start', end: 'highlight-end' },
+},
+//highlight-start
+{
+  className: 'code-block-added-line',
+  line: 'Next Line Added',
+},
+//highlight-end
+{
+  className: 'code-block-sub-line',
+  line: 'Next Line Subbed',
+},
+```
+````
+
+
+Here is an example showing a change
+```js 
+{
+  className: 'code-block-sub-line',
+//Next Line Subbed
+- line: 'Next Line Subbed',
+//Next Line Added
++ line: 'Next Line Subtracted', //added a better name
+},
+```
+
+````md
+```js 
+{
+  className: 'code-block-sub-line',
+  //Next Line Subbed
+  line: 'Next Line Subbed',
+  //Next Line Added
+  line: 'Next Line Subtracted', //added a better name
+},
+```
+````
+
+:::warning
+
+Avoid using the diff styling with line numbers. This is because when differences are shown the line numbers would be the same. For example, in this code, lines 2 and 3 should both be labeled as line 2.
+
+```js showLineNumbers
+thing 1
+//Next Line Subbed
+thing 3
+//Next Line Added
+thing 2
+thing 3
+```
+
+:::
+
+
+## Inline Code
+here is `inline code`.
+
+```md
+here is `inline code`.
+```
+
+## Basic Code Block
+
+```md
+This is a code block
+let variable = thing;
+```
+
+````md
+```md
+This is a code block
+let variable = thing;
+```
+````
+
+## Highlighting
+
+### With Comments
+To highlight one line:
+```js
+this is code
+//highlight-next-line
+this is code too //im highlighted
+this is code
+```
+
+````md
+```js
+this is code
+//highlight-next-line
+this is code too //im highlighted
+this is code
+```
+````
+To highlight multiple lines:
+```js
+this is code
+//highlight-start
+this is code too //im highlighted
+this is code also //im also highlighted
+//highlight-end
+this is code
+```
+
+````md
+```js
+this is code
+//highlight-start
+this is code too //im highlighted
+this is code also //im also highlighted
+//highlight-end
+this is code
+```
+````
+
+### With Line Numbers
+To highlight one line:
+```js {2,5-6}
+this is code
+this is code too //im highlighted
+this is code
+this is code
+this is code //im highlighted
+this is code //im highlighted
+this is code
+this is code
+```
+
+````md
+```js {2,5-6}
+this is code
+this is code too //im highlighted
+this is code
+this is code
+this is code //im highlighted
+this is code //im highlighted
+this is code
+this is code
+```
+````
+
+### Set Up Custom Highlighting
+<Tabs>
+  <TabItem value="docusaurus.config.js">
+
+
+  ```js
+  export default {
+    themeConfig: {
+      prism: {
+        magicComments: [
+          // Remember to extend the default highlight class name as well!
+          {
+            className: 'theme-code-block-highlighted-line',
+            line: 'highlight-next-line',
+            block: {start: 'highlight-start', end: 'highlight-end'},
+          },
+          // highlight-start
+          {
+            className: 'code-block-added-line',
+            line: 'Next Line Added',
+          },
+          {
+            className: 'code-block-sub-line',
+            line: 'Next Line Subbed',
+          },
+          // highlight-end
+        ],
+      },
+    },
+  };
+  ```
+  </TabItem>
+  <TabItem value="src/css/custom.css">
+
+  ```css
+  .code-block-added-line {
+    background-color: #14BE01;
+    display: block;
+    margin: 0 calc(-1 * var(--ifm-pre-padding));
+    padding: 0 var(--ifm-pre-padding);
+    border-left: 3px solid #ff000080;
+  }
+
+  .code-block-sub-line {
+    background-color: #ff000020;
+    display: block;
+    margin: 0 calc(-1 * var(--ifm-pre-padding));
+    padding: 0 var(--ifm-pre-padding);
+    border-left: 3px solid #ff000080;
+  }
+  ```
+
+
+  </TabItem>
+  <TabItem value="myDoc.md">
+
+  ````md
+  Now we can show which lines being added and subtracted
+
+  ```js
+  const name = null;
+  // Next Line Subbed
+  - console.log(name.toUpperCase());
+  // Next-Line-Added
+  + console.log(name.toLowerCase());
+  // we changed from upper case to lower case
+  ```
+  ````
+  </TabItem>
+</Tabs>
+ ```js showLineNumbers 
+  const name = null;
+  // Next Line Subbed
+  - console.log(name.toUpperCase());
+  // Next Line Added
+  + console.log(name.toLowerCase());
+  // we changed from upper case to lower case
+  ```
+
+## Line Numbers
+
+```js showLineNumbers
+this is code
+this is code too
+this is code also
+this is code
+```
+
+````md
+```js showLineNumbers
+this is code
+this is code too
+this is code also
+this is code
+```
+````
+
+
+## Code Titles
+```md title="/src/components/HelloCodeTitle.js"
+this is code
+this is code too
+this is code also
+```
+````md
+```md title="/src/components/HelloCodeTitle.js"
+this is code
+this is code too
+this is code also
+```
+````
+
+
+## Difference Highlighting
+````diff
+- ```jsx {3}
++ ```jsx {4}
+  function HighlightSomeText(highlight) {
+    if (highlight) {
++     console.log('Highlighted text found');
+      return 'This text is highlighted!';
+    }
+
+    return 'Nothing highlighted';
+  }
+  ```
+````

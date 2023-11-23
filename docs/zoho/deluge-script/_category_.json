@@ -1,0 +1,10 @@
+{
+    "position": 2,
+    "label": "Zoho Deluge Script",
+    "collapsible": true,
+    "collapsed": false,
+    "link": {
+        "type": "doc",
+        "id": "zoho/deluge-script/introduction-to-deluge"
+    }
+}

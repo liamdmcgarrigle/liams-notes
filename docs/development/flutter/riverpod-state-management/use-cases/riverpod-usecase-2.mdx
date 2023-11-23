@@ -1,0 +1,290 @@
+---
+sidebar_position: 2
+title: Riverpod Usecase 2
+---
+
+:::info[This is based on a YouTube Tutorial]
+
+To follow the YouTube tutorial by [Vandad Nahavandipoor](https://www.youtube.com/@VandadNP), [click here](https://youtu.be/vtGCteFYs4M?si=dGwUuAXysfBKrzx9&t=1690).
+
+While this is based on the tutorial, I did make a lot of changes to the code.
+
+:::
+
+This use case will be a counter app that increments a counter in the app bar and body on a button press.
+
+
+## Create the project & add `hooks_riverpod`
+Create the project
+```bash
+flutter create riverpod_example_2
+```
+
+Install hooks_riverpod
+```bash
+flutter pub add hooks_riverpod
+```
+
+## Open `main.dart` in the `lib` folder
+Delete all of the code and replace it with this:
+```dart showLineNumbers title="main.dart"
+import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+
+void main() {
+  runApp(const ProviderScope(child: MyApp()));
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        useMaterial3: true,
+      ),
+      home: const MyHomePage(),
+    );
+  }
+}
+
+class MyHomePage extends ConsumerWidget {
+  const MyHomePage({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Example 2"),
+      ),
+    );
+  }
+}
+```
+On line 5 we wrap our MyApp() in Riverpod's ProviderScope() widget. This gives riverpod access to the entire app. This code returns a material app with a consumer stateless widget, shown from lines 25-36, that can access providers from Riverpod.
+
+## Create a `StateNotifier` class called Counter
+
+Add this class after the `main()` function in `main.dart` (at line 7 in the code above).
+
+```dart showLineNumbers title="main.dart"
+class Counter extends StateNotifier<int> {
+  Counter() : super(0);
+
+  void increment() => state += 1;
+}
+```
+
+This class extends Riverpod's `StateNotifier` class which already has all of the hard stuff done for us. 
+
+Our constructor `Counter() : super(0);` uses the `super` keyword, which is used to access the parent class, to set the initial value of the state, in this case `0`.
+
+The function on line 4 sets adds 1 to the state. Writing `state += 1` is the same as writing out `state = state + 1`.
+
+## Create the `StateNotifierProvider`
+
+Now we have the `StateNotifier` class but still no way to access it. To access this state from anywhere in our app we need to create a `StateNotifierProvider`. As the name says, it is the provider's job to provide the state. Under the `Counter()` class add this code:
+
+```dart title="main.dart"
+final counterProvider = StateNotifierProvider<Counter, int>((ref) => Counter());
+```
+
+In this code, we are creating a new instance of a `StateNotifierProvider` to be a provider for our counter class. 
+
+In the `<Counter, int>`, the `Counter` sets the type of the `StateNotifierProvider` to the counter class and the `int` says the counter class value is an int. So the value of the provider `counterProvider` is an instantiation of the `counter` class we made, which itself has a type of integer.
+
+
+## Display our state in the app
+
+### Setting up the UI
+Now we have our state set up we can start using it.
+
+First things first, let's add some UI. Add these lines to the `MyHomePage` widget. The `Center()` widget will center it's children and the `Column()` widget will align it's children in a column, which will just be one text for now.
+
+```dart title="main.dart"
+class MyHomePage extends ConsumerWidget {
+  const MyHomePage({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Example 2"),
+      ),
+        //Next Line Added
++   body: Center(
+        //Next Line Added
++       child: Column(
+        //Next Line Added
++         children: [
+        //Next Line Added
++           Text("Counter will go here"),
+        //Next Line Added
++         ],
+        //Next Line Added
++       ),
+        //Next Line Added
++     ),
+    );
+  }
+}
+```
+
+### Adding the counter to the body
+
+Now we will have "Counter will go here" Printed to the screen. Let's make that our counters value. The way we access the providers value is by using one of the methods on Riverpod's ref build parameter. Ref has various methods such as `watch()`, `read()`, `listen()`, and more. For now, we will use the `watch()` method.
+
+Change the text widget to this:
+
+```dart title="main.dart"
+Text(ref.watch(counterProvider).toString()),
+```
+
+We pass the `counterProvider` to the `ref.watch()` method to get the value of the `counterProvider`. We then need to convert the from an int to a String for the `Text()` widget, which we do with `.toString()`. With the `watch()` method, every time the state changes it will refresh the IU with the new state.
+
+Now the screen should show "0". We will increment the number soon, first let's add the state to the title.
+
+### Adding the counter to the title
+
+In the title, we will want to access the WidgetRef in another way. When the state changes the entire widget rebuilds itself. That means if we have the app bars title rebuild, it will rebuild the entire scaffold of the app just to change the text in the title, which could end up hurting performance as the app grows. 
+
+To get around this, we can use a Riverpod widget `Consumer()`. The `Consumer()` will allow us to have only the title itself rebuild when the state changes, which will be much more efficient for our app.
+
+The `Consumer()` widget looks like this:
+
+```dart showLineNumbers title="main.dart"
+Consumer(
+  builder: (context, ref, child) {
+    final counterValue = ref.watch(counterProvider);
+    return Text("Counter: $counterValue");
+  },
+),
+```
+
+Inside the body of the function, on line 3, we can run any logic needed. In this case, just getting the value of our provider. We can then return any widget with the `return` keyword.
+
+```dart title="main.dart"
+Widget build(BuildContext context, WidgetRef ref) {
+    return Scaffold(
+      appBar: AppBar(
+        //Next Line Subbed
+-       title: 'Flutter Demo',
+//Next Line Added
++       title: Consumer(
+//Next Line Added  
++         builder: (context, ref, child) {
+  //Next Line Added
++           final counterValue = ref.watch(counterProvider);
+//Next Line Added
++           return Text("Counter: $counterValue");
+            //Next Line Added
++         },
+//Next Line Added
++       ),
+      ),
+      body: Center(
+```
+
+Now the title of the page in the app bar should display "Counter: 0". When we increment the counter, only this text widget will be rebuilt, not the entire scaffold. 
+
+## Incrementing the counter
+
+We will increment the counter with a button in the UI. Below is all of the code needed.:
+
+```dart title="main.dart"
+body: Center(
+  child: Column(
+    children: [
+      //Next Line Added
++     TextButton(
+        //Next Line Added
++         onPressed: () {
+            //Next Line Added
++           ref.read(counterProvider.notifier).increment();
+//Next Line Added
++         },
+          //Next Line Added
++         child: const Text("Increment Counter")),
+      Text(ref.watch(counterProvider).toString()),
+    ],
+  ),
+),
+```
+
+The code in the `onPressed` is `ref.read(counterProvider.notifier).increment();`. This calls the `increment()` method on the `counter()` class that `counterProvider` instantiated. It is important to note the `.notifier` is required to access the object directly instead of just the value of the state. 
+
+The `.notifier` gives a clear separation between accessing the state itself (in this case the counter value) and the `StateNotifier` class. This means that there won't be unnecessary rebuilds when methods are called and provides a clear separation of when values are being read and when they are being manipulated.
+
+Now our example app is complete. When the button is pressed the number in the body and header will increment.
+
+## Full Code
+
+If you are stuck, here is my full `main.dart` file
+
+```dart showLineNumbers title="main.dart"
+import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+
+void main() {
+  runApp(const ProviderScope(child: MyApp()));
+}
+
+class Counter extends StateNotifier<int> {
+  Counter() : super(0);
+
+  void increment() => state += 1;
+}
+
+final counterProvider = StateNotifierProvider<Counter, int>((ref) => Counter());
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        useMaterial3: true,
+      ),
+      home: const MyHomePage(),
+    );
+  }
+}
+
+class MyHomePage extends ConsumerWidget {
+  const MyHomePage({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Consumer(
+          builder: (context, ref, child) {
+            final counterValue = ref.watch(counterProvider);
+            return Text("Counter: $counterValue");
+          },
+        ),
+      ),
+      body: Center(
+        child: Column(
+          children: [
+            TextButton(
+                onPressed: () {
+                  ref.read(counterProvider.notifier).increment();
+                },
+                child: const Text("Increment Counter")),
+            Text(ref.watch(counterProvider).toString()),
+          ],
+        ),
+      ),
+    );
+  }
+}
+```
