@@ -9,7 +9,7 @@ To follow the YouTube tutorial by [Vandad Nahavandipoor](https://www.youtube.com
 
 :::
 
-This is a very simple use case showing the data and time using a global provider.
+This is a very simple use case showing the date and time using a global provider.
 
 
 ## Create the project & add `hooks_riverpod`
