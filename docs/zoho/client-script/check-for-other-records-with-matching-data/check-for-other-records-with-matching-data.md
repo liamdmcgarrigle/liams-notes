@@ -71,7 +71,6 @@ try {
         oldContactInfo = { "id": contactSearch[0].id, "name": contactSearch[0].Full_Name };
         //this sets the lookup field to the above value
         oldContactField.setValue(oldContactInfo);
-
     }
 }
 catch (e) {}
